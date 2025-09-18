@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <title>Mettre à jour un document</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #F5F6F5;
+            color: #333;
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background-color: #FFFFFF;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            color: #0055A4;
+            font-size: 24px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        .error {
+            color: #D32F2F;
+            background-color: #FFEBEE;
+            padding: 10px;
+            border-radius: 4px;
+            margin-bottom: 20px;
+        }
+        form {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        label {
+            font-weight: 500;
+            color: #333;
+        }
+        select, input[type="text"], input[type="file"] {
+            padding: 10px;
+            border: 1px solid #E0E0E0;
+            border-radius: 4px;
+            background-color: #FAFAFA;
+            font-size: 16px;
+        }
+        button {
+            background-color: #388E3C;
+            color: #FFFFFF;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            font-size: 16px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+        button:hover {
+            background-color: #2E7D32;
+        }
+        .nav-links {
+            margin-top: 20px;
+            text-align: center;
+        }
+        .nav-links a {
+            margin: 0 15px;
+            text-decoration: none;
+            color: #0055A4;
+            font-weight: 500;
+        }
+        .nav-links a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1>Mettre à jour un document</h1>
+    <div th:if="${error}" class="error">
+        Erreur: <span th:text="${error}"></span>
+    </div>
+    <form th:action="@{/nuxeo/update}" method="post" enctype="multipart/form-data">
+        <label for="name"><i class="fas fa-file"></i> Nom du document</label>
+        <select id="name" name="name" required>
+            <option value="" disabled selected>Sélectionnez un document</option>
+            <option th:each="doc : ${documents}" th:value="${doc.title}" th:text="${doc.title}"></option>
+        </select>
+        <label for="newTitle"><i class="fas fa-edit"></i> Nouveau titre (optionnel)</label>
+        <input type="text" id="newTitle" name="newTitle" />
+        <label for="file"><i class="fas fa-file-upload"></i> Nouveau fichier (optionnel)</label>
+        <input type="file" id="file" name="file" />
+        <button type="submit"><i class="fas fa-save"></i> Mettre à jour</button>
+    </form>
+    <div class="nav-links">
+        <a th:href="@{/nuxeo/upload}">Uploader un document</a>
+        <a th:href="@{/nuxeo/list}">Voir la liste des documents</a>
+        <a th:href="@{/nuxeo/retrieve}">Récupérer un document</a>
+        <a th:href="@{/nuxeo/delete}">Supprimer un document</a>
+    </div>
+</div>
+</body>
+</html>

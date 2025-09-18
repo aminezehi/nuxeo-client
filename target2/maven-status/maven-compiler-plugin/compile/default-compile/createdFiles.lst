@@ -1,0 +1,8 @@
+com\example\nuxeo_client\controller\NuxeoUploadController.class
+com\example\nuxeo_client\GlobalExceptionHandler.class
+com\example\nuxeo_client\NuxeoClientApplication.class
+com\example\nuxeo_client\ServletInitializer.class
+com\example\nuxeo_client\controller\HomeController.class
+com\example\nuxeo_client\services\NuxeoService.class
+com\example\nuxeo_client\model\NuxeoDocument.class
+com\example\nuxeo_client\controller\NuxeoViewController.class

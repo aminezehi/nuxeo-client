@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Liste des documents Nuxeo</title>
+</head>
+<body>
+<h1>Liste des documents Nuxeo</h1>
+
+<div th:if="${error}">
+  <p style="color:red;">Erreur: <span th:text="${error}"></span></p>
+</div>
+
+<ul>
+  <li th:each="doc : ${documents}">
+    <strong th:text="${doc.title}">Titre</strong> -
+    <span th:text="${doc.path}">Chemin</span> -
+    <em th:text="${doc.type}">Type</em>
+    <a th:href="@{'/nuxeo/download/' + ${doc.uid}}">📥 Télécharger</a>
+  </li>
+</ul>
+</body>
+</html>

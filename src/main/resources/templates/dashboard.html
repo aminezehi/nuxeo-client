@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Tableau de bord Nuxeo</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #F5F6F5;
+            color: #333;
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background-color: #FFFFFF;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+        h1 {
+            color: #0055A4;
+            font-size: 28px;
+            margin-bottom: 30px;
+        }
+        .dashboard-links {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            justify-items: center;
+        }
+        .dashboard-links a {
+            display: inline-flex;
+            align-items: center;
+            background-color: #0055A4;
+            color: #FFFFFF;
+            padding: 12px 24px;
+            border-radius: 4px;
+            text-decoration: none;
+            font-size: 16px;
+            font-weight: 500;
+            transition: background-color 0.2s;
+            width: 100%;
+            max-width: 250px;
+            justify-content: center;
+        }
+        .dashboard-links a:hover {
+            background-color: #003087;
+        }
+        .dashboard-links a i {
+            margin-right: 8px;
+        }
+    </style>
+    </head>
+<body>
+<div class="container">
+    <h1>Tableau de bord Nuxeo</h1>
+    <div class="dashboard-links">
+        <a th:href="@{/nuxeo/upload}"><i class="fas fa-upload"></i> Uploader un document</a>
+        <a th:href="@{/nuxeo/list}"><i class="fas fa-list"></i> Voir la liste des documents</a>
+        <a th:href="@{/nuxeo/retrieve}"><i class="fas fa-search"></i> Récupérer un document</a>
+        <a th:href="@{/nuxeo/update}"><i class="fas fa-edit"></i> Mettre à jour un document</a>
+        <a th:href="@{/nuxeo/delete}"><i class="fas fa-trash"></i> Supprimer un document</a>
+    </div>
+</div>
+</body>
+</html>
+

@@ -1,0 +1,6 @@
+connect('weblogic','weblogic123','t3://localhost:7001')
+domainRuntime()
+cd('AppRuntimeStateRuntime/AppRuntimeStateRuntime')
+print 'Intended=', cmo.getIntendedState('nuxeo-client-app','AdminServer')
+print 'Current =', cmo.getCurrentState('nuxeo-client-app','AdminServer')
+exit()

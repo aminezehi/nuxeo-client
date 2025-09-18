@@ -1,0 +1,20 @@
+connect('weblogic','weblogic123','t3://localhost:7001')
+domainConfig()
+ls('Servers')
+edit()
+startEdit()
+try:
+  stopApplication('nuxeo-client-app')
+except:
+  pass
+try:
+  undeploy('nuxeo-client-app')
+except:
+  pass
+deploy(appName='nuxeo-client-app', path=r'C:\Users\MSI\nuxeo-client\nuxeo-client\target2\nuxeo-client-0.0.1-SNAPSHOT.war', targets='AdminServer', upload='true', remote='false')
+save()
+activate(block='true')
+startApplication('nuxeo-client-app')
+domainRuntime()
+state('nuxeo-client-app','AppDeployment','AdminServer')
+exit()

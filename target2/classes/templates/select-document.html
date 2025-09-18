@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Sélectionner un document</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #F5F6F5;
+            color: #333;
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background-color: #FFFFFF;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            color: #0055A4;
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+        .error {
+            color: #D8000C;
+            background-color: #FFD2D2;
+            padding: 10px;
+            border-radius: 4px;
+            margin-bottom: 20px;
+        }
+        label {
+            display: block;
+            margin-bottom: 10px;
+            font-weight: 500;
+        }
+        select, input[type="file"], input[type="text"] {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 16px;
+        }
+        button {
+            background-color: #0055A4;
+            color: #FFFFFF;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 500;
+        }
+        button:hover {
+            background-color: #003087;
+        }
+        .nav-links {
+            margin-top: 20px;
+        }
+        .nav-links a {
+            color: #0055A4;
+            text-decoration: none;
+            margin-right: 15px;
+            font-weight: 500;
+        }
+        .nav-links a:hover {
+            text-decoration: underline;
+        }
+        .modal-content {
+            border-radius: 8px;
+        }
+        .modal-header {
+            background-color: #0055A4;
+            color: #FFFFFF;
+        }
+        .modal-footer .btn-primary {
+            background-color: #0055A4;
+            border-color: #0055A4;
+        }
+        .modal-footer .btn-primary:hover {
+            background-color: #003087;
+            border-color: #003087;
+        }
+        .modal-footer .btn-secondary {
+            background-color: #6c757d;
+            border-color: #6c757d;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1>Sélectionner un document pour <span th:text="${action == 'retrieve' ? 'récupération' : action == 'update' ? 'mise à jour' : 'suppression'}"></span></h1>
+    <div th:if="${error}" class="error" th:text="${error}"></div>
+    <p>Plusieurs documents correspondent au nom "<span th:text="${name}"></span>". Veuillez sélectionner un document :</p>
+    <form id="selectForm" th:action="@{/nuxeo/{action}/select(action=${action})}" method="post" enctype="multipart/form-data">
+        <input type="hidden" name="name" th:value="${name}"/>
+        <label for="uid">Document :</label>
+        <select id="uid" name="uid" required>
+            <option value="" disabled selected>Sélectionner un document</option>
+            <option th:each="doc : ${documents}" th:value="${doc.uid}" th:text="${doc.title + ' (UID: ' + doc.uid + ')'}"></option>
+        </select>
+        <div th:if="${action == 'update'}">
+            <label for="newTitle">Nouveau titre (optionnel) :</label>
+            <input type="text" id="newTitle" name="newTitle" th:value="${newTitle}"/>
+            <label for="file">Nouveau fichier (optionnel) :</label>
+            <input type="file" id="file" name="file"/>
+        </div>
+        <button type="button" th:if="${action == 'delete'}" data-bs-toggle="modal" data-bs-target="#confirmDeleteModal">Confirmer</button>
+        <button type="submit" th:unless="${action == 'delete'}">Confirmer</button>
+    </form>
+    <div class="nav-links">
+        <a th:href="@{/nuxeo}"><i class="fas fa-home"></i> Retour au tableau de bord</a>
+        <a th:href="@{/nuxeo/{action}(action=${action})}"><i class="fas fa-arrow-left"></i> Retour</a>
+    </div>
+</div>
+
+<!-- Modal de confirmation pour la suppression -->
+<div class="modal fade" id="confirmDeleteModal" th:if="${action == 'delete'}" tabindex="-1" aria-labelledby="confirmDeleteModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="confirmDeleteModalLabel">Confirmer la suppression</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                Êtes-vous sûr de vouloir supprimer le document sélectionné ?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+                <button type="button" class="btn btn-primary" onclick="submitSelectForm()">Confirmer</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+    function submitSelectForm() {
+        document.getElementById('selectForm').submit();
+    }
+</script>
+</body>
+</html>

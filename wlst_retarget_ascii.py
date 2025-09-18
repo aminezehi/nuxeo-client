@@ -1,0 +1,14 @@
+connect('weblogic','weblogic123','t3://localhost:7001')
+edit()
+startEdit()
+try:
+  unassign('AppDeployment','nuxeo-api','Target','AdminServer')
+except:
+  pass
+assign('AppDeployment','nuxeo-api','Target','ms1')
+save()
+activate(block='true')
+domainConfig()
+cd('/AppDeployments/nuxeo-api/Targets')
+ls()
+exit()
